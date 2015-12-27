@@ -11,22 +11,16 @@ import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
     Smile smile = new Smile();
-    private static String[] TEXTS = new String[] {
-            "First",
-            "Second",
-            "Third",
-            "Fourth"
-    };
+    FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_page);
-        //initButtons();
+        setContentView(R.layout.activity_main);
         ViewPager pager = (ViewPager)findViewById(R.id.pageContainer);
-        FragmentManager fm = getSupportFragmentManager();
-
-        pager.setAdapter(new SmilePagerAdapter(fm, TEXTS));
+        fm = getSupportFragmentManager();
+        pager.setAdapter(new SmileAdapter(fm));
+        //initButtons();
     }
 
     /**

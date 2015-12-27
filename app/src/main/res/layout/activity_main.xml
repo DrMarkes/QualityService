@@ -1,38 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pageContainer"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="horizontal">
+    android:layout_width="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageButton
-            android:id="@+id/positive"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_centerVertical="true"
-            android:background="@drawable/positive"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
-
-        <ImageButton
-            android:id="@+id/neutral"
-            android:background="@drawable/neutral"
-            android:layout_centerInParent="true"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
-
-        <ImageButton
-            android:id="@+id/negative"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/negative"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
-    </RelativeLayout>
-
-</LinearLayout>
+</android.support.v4.view.ViewPager>

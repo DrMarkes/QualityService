@@ -8,10 +8,10 @@ import android.support.v4.app.Fragment;
 public class PageFragment {
 
     public static Fragment newInstance(int page) {
-      //  if(page == 0) {
+        if(page == 0) {
             return new SmileFragment();
-    //    } else {
-     //       return new QualityFragment();
-     //   }
+        } else {
+            return new QualityFragment();
+        }
     }
 }

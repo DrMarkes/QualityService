@@ -9,9 +9,9 @@ public class Smile {
     private int countNegative;
 
     public Smile() {
-        countNeutral = 0;
-        countNegative = 0;
-        countPositive = 0;
+        countNeutral = 15;
+        countNegative = 20;
+        countPositive = 30;
     }
 
     public void increaseCountPositive() {

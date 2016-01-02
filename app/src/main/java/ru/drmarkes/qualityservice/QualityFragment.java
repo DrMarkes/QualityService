@@ -2,10 +2,12 @@ package ru.drmarkes.qualityservice;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 public class QualityFragment extends Fragment {
     Smile smile;
     private ArrayList<Float> values = new ArrayList<>(3);
+    final static String TAG = "MyLogs";
+    private View qualityView;
 
     public static QualityFragment newInstance(Smile smile) {
         Bundle args = new Bundle();
@@ -25,25 +29,51 @@ public class QualityFragment extends Fragment {
     }
 
     public ArrayList<Float> getValues() {
-        values.add((float)smile.getCountPositive());
-        values.add((float)smile.getCountNegative());
-        values.add((float)smile.getCountNeutral());
+        values.add(0, (float) smile.getCountPositive());
+        values.add(1, (float) smile.getCountNegative());
+        values.add(2, (float) smile.getCountNeutral());
+        Log.d(TAG, Float.toString(values.get(0)));
+        Log.d(TAG, Float.toString(values.get(1)));
+        Log.d(TAG, Float.toString(values.get(2)));
         return  values;
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        drawQuality();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View qualityView = inflater.inflate(R.layout.page, container, false);
-        FrameLayout frameLayout = (FrameLayout) qualityView.findViewById(R.id.frameLayout);
-        values = calculateData(values);
-        frameLayout.addView(new QualityCanvas(getActivity(), values));
+        qualityView = inflater.inflate(R.layout.page, container, false);
         return qualityView;
+    }
+
+    public void drawQuality() {
+        getValues();
+        // values = calculateData(values);
+        TextView textPositive = (TextView)qualityView.findViewById(R.id.textViewPositive);
+        textPositive.setText("Позитивных отзывов: " + Float.toString(values.get(0)));
+
+        TextView textNeutral = (TextView)qualityView.findViewById(R.id.textViewNeutral);
+        textNeutral.setText("Нейтральных отзывов: " + Float.toString(values.get(2)));
+
+        TextView textNegative = (TextView)qualityView.findViewById(R.id.textViewNegative);
+        textNegative.setText("Негативных отзывов: " + Float.toString(values.get(1)));
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser) {
+            drawQuality();
+        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getValues();
     }
 
     private ArrayList<Float> calculateData(ArrayList<Float> data) {

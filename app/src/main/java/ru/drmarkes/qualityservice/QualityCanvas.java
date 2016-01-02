@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class QualityCanvas extends View {
     private ArrayList<Float> value_degree;
     int temp;
     private int[] COLORS = {Color.GREEN, Color.RED, Color.YELLOW};
-    RectF rectf = new RectF(200, 200, 600, 600);
+    RectF rectf = new RectF(30, 30, 200, 200);
 
     public QualityCanvas(Context context, ArrayList<Float> values) {
         super(context);
@@ -28,7 +29,8 @@ public class QualityCanvas extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int i = 0; i < value_degree.size(); i++) {//values2.length; i++) {
+        for (int i = 0; i < value_degree.size(); i++) {
+        Log.d("MyLogs", Integer.toString(value_degree.size()));
             if (i == 0) {
                 temp = SECTOR_BEGIN;
                 paint.setColor(COLORS[i]);

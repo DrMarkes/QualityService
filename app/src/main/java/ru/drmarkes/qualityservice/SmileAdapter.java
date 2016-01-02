@@ -28,4 +28,5 @@ public class SmileAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return 2;
     }
+
 }

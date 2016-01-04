@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBConnector {
 
     private static final String DATABASE_NAME = "quality.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static final String TABLE_NAME = "smile";
 
     // Название столбцов
@@ -23,7 +23,6 @@ public class DBConnector {
     private static final String COLUMN_NEGATIVE = "Negative";
 
     // Номера столбцов
-    private static final int NUM_COLUMN_ID = 1;
     private static final int NUM_COLUMN_POSITIVE = 1;
     private static final int NUM_COLUMN_NEUTRAL = 2;
     private static final int NUM_COLUMN_NEGATIVE = 3;

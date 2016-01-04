@@ -8,10 +8,12 @@ import android.support.v4.app.FragmentPagerAdapter;
  * Created by Андрей on 27.12.2015.
  */
 public class SmileAdapter extends FragmentPagerAdapter {
-    Smile smile;
+    private Smile smile;
+    private Fragment fragment;
 
     public SmileAdapter(FragmentManager fm, Smile smile) {
         super(fm);
+        fragment = QualityFragment.newInstance(smile);
         this.smile = smile;
     }
 
@@ -20,8 +22,12 @@ public class SmileAdapter extends FragmentPagerAdapter {
         if(position == 0) {
             return SmileFragment.newInstance();
         } else {
-            return QualityFragment.newInstance(smile);
+            return fragment;
         }
+    }
+
+    public Fragment getFragment() {
+        return fragment;
     }
 
     @Override

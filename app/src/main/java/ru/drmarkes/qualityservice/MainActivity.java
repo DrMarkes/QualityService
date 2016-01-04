@@ -11,17 +11,28 @@ public class MainActivity extends FragmentActivity implements SmileFragment.onSm
     protected Smile smile;
     protected FragmentManager fragmentManager;
     DBConnector mDBConnector;
+    onChahgedSmileFieldsListener chahgedSmileFieldsListener;
+
+    public interface onChahgedSmileFieldsListener {
+        void changeSmileFields();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mDBConnector = new DBConnector (this);
         mDBConnector.open();
         smile = mDBConnector.select();
+
         ViewPager pager = (ViewPager) findViewById(R.id.pageContainer);
         fragmentManager = getSupportFragmentManager();
-        pager.setAdapter(new SmileAdapter(fragmentManager, smile));
+        SmileAdapter smileAdapter = new SmileAdapter(fragmentManager, smile);
+        pager.setAdapter(smileAdapter);
+
+        chahgedSmileFieldsListener =
+                (onChahgedSmileFieldsListener)smileAdapter.getFragment();
     }
 
     @Override
@@ -53,6 +64,7 @@ public class MainActivity extends FragmentActivity implements SmileFragment.onSm
                 smile.increaseCountNegative();
                 break;
         }
+        chahgedSmileFieldsListener.changeSmileFields();
     }
 
     @Override

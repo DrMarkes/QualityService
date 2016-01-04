@@ -14,8 +14,8 @@ import java.util.ArrayList;
 /**
  * Created by Андрей on 29.12.2015.
  */
-public class QualityFragment extends Fragment {
-    Smile smile;
+public class QualityFragment extends Fragment implements MainActivity.onChahgedSmileFieldsListener {
+    private Smile smile;
     private ArrayList<Float> values = new ArrayList<>(3);
     private View qualityView;
 
@@ -35,14 +35,9 @@ public class QualityFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        drawQuality();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         qualityView = inflater.inflate(R.layout.page, container, false);
+        drawQuality();
         return qualityView;
     }
 
@@ -57,14 +52,6 @@ public class QualityFragment extends Fragment {
 
         TextView textNegative = (TextView)qualityView.findViewById(R.id.textViewNegative);
         textNegative.setText("Негативных отзывов: " + Float.toString(values.get(1)));
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser) {
-            drawQuality();
-        }
     }
 
     @Override
@@ -89,5 +76,10 @@ public class QualityFragment extends Fragment {
 
         }
         return data;
+    }
+
+    @Override
+    public void changeSmileFields() {
+        drawQuality();
     }
 }

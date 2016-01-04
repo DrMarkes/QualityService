@@ -10,12 +10,15 @@ import android.widget.Toast;
 public class MainActivity extends FragmentActivity implements SmileFragment.onSmileClickListener {
     protected Smile smile;
     protected FragmentManager fragmentManager;
+    DBConnector mDBConnector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        smile = new Smile();
+        mDBConnector = new DBConnector (this);
+        mDBConnector.open();
+        smile = mDBConnector.select();
         ViewPager pager = (ViewPager) findViewById(R.id.pageContainer);
         fragmentManager = getSupportFragmentManager();
         pager.setAdapter(new SmileAdapter(fragmentManager, smile));
@@ -50,8 +53,18 @@ public class MainActivity extends FragmentActivity implements SmileFragment.onSm
                 smile.increaseCountNegative();
                 break;
         }
-        toast = Toast.makeText(this, smile.getQuality(), Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP, 0, 0);
-        toast.show();
+    }
+
+    @Override
+    protected void onResume() {
+        mDBConnector.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        mDBConnector.update(smile);
+        mDBConnector.close();
+        super.onPause();
     }
 }

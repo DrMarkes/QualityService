@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class QualityFragment extends Fragment {
     Smile smile;
     private ArrayList<Float> values = new ArrayList<>(3);
-    final static String TAG = "MyLogs";
     private View qualityView;
 
     public static QualityFragment newInstance(Smile smile) {
@@ -32,9 +31,6 @@ public class QualityFragment extends Fragment {
         values.add(0, (float) smile.getCountPositive());
         values.add(1, (float) smile.getCountNegative());
         values.add(2, (float) smile.getCountNeutral());
-        Log.d(TAG, Float.toString(values.get(0)));
-        Log.d(TAG, Float.toString(values.get(1)));
-        Log.d(TAG, Float.toString(values.get(2)));
         return  values;
     }
 

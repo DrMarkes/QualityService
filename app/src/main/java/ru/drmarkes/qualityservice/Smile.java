@@ -8,10 +8,10 @@ public class Smile {
     private int countNeutral;
     private int countNegative;
 
-    public Smile() {
-        countNeutral = 1;
-        countNegative = 1;
-        countPositive = 1;
+    public Smile(int positive, int neutral, int negative) {
+        countNeutral = neutral;
+        countNegative = negative;
+        countPositive = positive;
     }
 
     public void increaseCountPositive() {
@@ -36,11 +36,5 @@ public class Smile {
 
     public int getCountNegative() {
         return countNegative;
-    }
-
-    public String getQuality() {
-        return "Позитивно: " + getCountPositive() +
-                "; Нейтрально: " + getCountNeutral() +
-                "; Негативно: " + getCountNegative();
     }
 }

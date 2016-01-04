@@ -4,17 +4,16 @@
     android:id="@+id/fragment"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background"
-    android:weightSum="1">
+    android:background="@color/background">
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/text_margin_top"
         android:text="New Text"
         android:textColor="@color/text"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size"
         android:id="@+id/textViewPositive"
         android:layout_gravity="center_horizontal" />
 
@@ -22,19 +21,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size"
         android:textColor="@color/text"
         android:id="@+id/textViewNeutral"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="@dimen/text_margin_top"/>
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/text_margin_top"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:textColor="@color/text"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size"
         android:id="@+id/textViewNegative"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

@@ -16,15 +16,15 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_centerVertical="true"
         android:background="@drawable/positive"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_width="@dimen/size_button"
+        android:layout_height="@dimen/size_button" />
 
         <ImageButton
         android:id="@+id/neutral"
         android:background="@drawable/neutral"
         android:layout_centerInParent="true"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_width="@dimen/size_button"
+        android:layout_height="@dimen/size_button" />
 
         <ImageButton
         android:id="@+id/negative"
@@ -32,8 +32,8 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_alignParentRight="true"
         android:background="@drawable/negative"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_width="@dimen/size_button"
+        android:layout_height="@dimen/size_button" />
     </RelativeLayout>
 
 </LinearLayout>

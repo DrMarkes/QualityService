@@ -3,21 +3,14 @@ package ru.drmarkes.qualityservice;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-
 import java.util.ArrayList;
 
 /**
@@ -25,7 +18,7 @@ import java.util.ArrayList;
  */
 public class QualityFragment extends Fragment implements MainActivity.onChahgedSmileFieldsListener {
     private Smile smile;
-    private ArrayList<Float> values = new ArrayList<>(3);
+    ArrayList<Entry> yVals1;
     private View qualityView;
     PieChart chart;
 
@@ -37,11 +30,11 @@ public class QualityFragment extends Fragment implements MainActivity.onChahgedS
         return fragment;
     }
 
-    public ArrayList<Float> getValues() {
-        values.add(0, (float) smile.getCountPositive());
-        values.add(1, (float) smile.getCountNeutral());
-        values.add(2, (float) smile.getCountNegative());
-        return  values;
+    public void setValues() {
+        yVals1 = new ArrayList<>();
+        yVals1.add(new Entry(smile.getCountPositive(), 0));
+        yVals1.add(new Entry(smile.getCountNeutral(), 1));
+        yVals1.add(new Entry(smile.getCountNegative(), 2));
     }
 
     @Override
@@ -53,57 +46,37 @@ public class QualityFragment extends Fragment implements MainActivity.onChahgedS
     }
 
     public void drawQuality() {
-        getValues();
-
+        setValues();
         chart.setDescription("");
-        chart.setDragDecelerationFrictionCoef(0.95f);
-        setData(3);
+        chart.setHoleColor(getResources().getColor(R.color.backPieChart));
+        chart.setCenterText("Результаты");
+        chart.setHoleRadius(25);
+        chart.setTransparentCircleRadius(35);
+        chart.setTransparentCircleAlpha(150);
+        setData();
     }
 
-    private void setData(int count) {
-
+    private void setData() {
         String[] mParties = new String[] {
-                "Положительные отзыв", "Нейтральные отзывы", "Отрицательные отзывы"
+                "Положительные отзывы", "Нейтральные отзывы", "Отрицательные отзывы"
         };
-
-        ArrayList<Entry> yVals1 = new ArrayList<>();
-
-        // IMPORTANT: In a PieChart, no values (Entry) should have the same
-        // xIndex (even if from different DataSets), since no values can be
-        // drawn above each other.
-        for (int i = 0; i < count; i++) {
-            yVals1.add(new Entry(values.get(i), i));
-        }
 
         ArrayList<String> xVals = new ArrayList<>();
 
-        for (int i = 0; i < count; i++)
-            xVals.add("");
+        for (int i = 0; i < 3; i++)
+            xVals.add(mParties[i]);
 
-        PieDataSet dataSet = new PieDataSet(yVals1, "Результаты опроса");
-    //    dataSet.setSliceSpace(2f);
-    //    dataSet.setSelectionShift(5f);
-
-        // add a lot of colors
+        PieDataSet dataSet = new PieDataSet(yVals1, "");
 
         ArrayList<Integer> colors = new ArrayList<>();
-
-        colors.add(Color.YELLOW);
-
-        colors.add(Color.GREEN);
-
-        colors.add(Color.RED);
-
+        colors.add(getResources().getColor(R.color.yellow));
+        colors.add(getResources().getColor(R.color.green));
+        colors.add(getResources().getColor(R.color.red));
         dataSet.setColors(colors);
-    //    dataSet.setSelectionShift(0f);
 
         PieData data = new PieData(xVals, dataSet);
-        data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
+        data.setValueTextColor(Color.BLACK);
         chart.setData(data);
-
-     //   chart.highlightValues(null);
 
         chart.invalidate();
     }

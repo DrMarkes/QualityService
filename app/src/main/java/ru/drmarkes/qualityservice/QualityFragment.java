@@ -1,14 +1,16 @@
 package ru.drmarkes.qualityservice;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 
 /**
@@ -16,8 +18,9 @@ import java.util.ArrayList;
  */
 public class QualityFragment extends Fragment implements MainActivity.onChahgedSmileFieldsListener {
     private Smile smile;
-    private ArrayList<Float> values = new ArrayList<>(3);
+    ArrayList<Entry> yVals1;
     private View qualityView;
+    PieChart chart;
 
     public static QualityFragment newInstance(Smile smile) {
         Bundle args = new Bundle();
@@ -27,55 +30,60 @@ public class QualityFragment extends Fragment implements MainActivity.onChahgedS
         return fragment;
     }
 
-    public ArrayList<Float> getValues() {
-        values.add(0, (float) smile.getCountPositive());
-        values.add(1, (float) smile.getCountNegative());
-        values.add(2, (float) smile.getCountNeutral());
-        return  values;
+    public void setValues() {
+        yVals1 = new ArrayList<>();
+        yVals1.add(new Entry(smile.getCountPositive(), 0));
+        yVals1.add(new Entry(smile.getCountNeutral(), 1));
+        yVals1.add(new Entry(smile.getCountNegative(), 2));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         qualityView = inflater.inflate(R.layout.page, container, false);
+        chart = (PieChart) qualityView.findViewById(R.id.chart);
         drawQuality();
         return qualityView;
     }
 
     public void drawQuality() {
-        getValues();
-        // values = calculateData(values);
-        TextView textPositive = (TextView)qualityView.findViewById(R.id.textViewPositive);
-        textPositive.setText("Позитивных отзывов: " + Float.toString(values.get(0)));
+        setValues();
+        chart.setDescription("");
+        chart.setHoleColor(getResources().getColor(R.color.backPieChart));
+        chart.setCenterText("Результаты");
+        chart.setHoleRadius(25);
+        chart.setTransparentCircleRadius(35);
+        chart.setTransparentCircleAlpha(150);
+        setData();
+    }
 
-        TextView textNeutral = (TextView)qualityView.findViewById(R.id.textViewNeutral);
-        textNeutral.setText("Нейтральных отзывов: " + Float.toString(values.get(2)));
+    private void setData() {
+        String[] mParties = new String[] {
+                "Положительные отзывы", "Нейтральные отзывы", "Отрицательные отзывы"
+        };
 
-        TextView textNegative = (TextView)qualityView.findViewById(R.id.textViewNegative);
-        textNegative.setText("Негативных отзывов: " + Float.toString(values.get(1)));
+        ArrayList<String> xVals = new ArrayList<>();
+
+        for (int i = 0; i < 3; i++)
+            xVals.add(mParties[i]);
+
+        PieDataSet dataSet = new PieDataSet(yVals1, "");
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(getResources().getColor(R.color.yellow));
+        colors.add(getResources().getColor(R.color.green));
+        colors.add(getResources().getColor(R.color.red));
+        dataSet.setColors(colors);
+
+        PieData data = new PieData(xVals, dataSet);
+        data.setValueTextColor(Color.BLACK);
+        chart.setData(data);
+
+        chart.invalidate();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    private ArrayList<Float> calculateData(ArrayList<Float> data) {
-        // TODO Auto-generated method stub
-        float total = 0;
-        for (float value: data) {
-            total += value;
-        }
-
-        if(total == 0) {
-            total = 1;
-        }
-
-        for (int i = 0; i < data.size(); i++) {
-            float calculateData = 360 * (data.get(i) / total);
-            data.set(i, calculateData);
-
-        }
-        return data;
     }
 
     @Override
